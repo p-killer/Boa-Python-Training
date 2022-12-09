@@ -1,0 +1,12 @@
+status: 301
+content-length: 0
+location: https://www.youtube.com/
+strict-transport-security: max-age=31536000; includeSubDomains; preload
+date: Mon, 16 Jul 2018 05:08:35 GMT
+content-type: text/html
+server: YouTube Frontend Proxy
+x-xss-protection: 1; mode=block
+alt-svc: quic=":443"; ma=2592000; v="44,43,39,35"
+-x-permanent-redirect-url: https://www.youtube.com/
+content-location: https://youtube.com/
+

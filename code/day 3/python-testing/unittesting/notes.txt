@@ -1,0 +1,17 @@
+Unit testing:
+Testing to check wheather we are meeting the requirement of client or not.
+
+Unit is class, function, module....
+
+Testing framework : unittest
+
+Test Driven Development: TDD
+1. write the test code (test specs - requirement of client)
+2. Write the actual functionality 
+3. run the test
+    pass    or fail.
+
+pass : go ahead
+fail: fix the bug
+
+pylint : validation tool , quality 

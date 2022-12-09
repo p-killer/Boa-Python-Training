@@ -1,0 +1,10 @@
+status: 301
+content-length: 0
+location: https://youtube.com/
+date: Mon, 16 Jul 2018 05:08:34 GMT
+content-type: text/html
+server: YouTube Frontend Proxy
+x-xss-protection: 1; mode=block
+-x-permanent-redirect-url: https://youtube.com/
+content-location: http://youtube.com
+

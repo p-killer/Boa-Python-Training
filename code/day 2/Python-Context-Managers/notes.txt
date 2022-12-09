@@ -1,0 +1,170 @@
+Managing Resources in Python with Context Manager:
+----------------------------------------------------------
+Use of context manager is to properly manage IO resources
+to avoid memory leaks and improve performance of app.
+
+Example:
+
+files = []
+for x in range(100000):
+    files.append(open('foo.txt', 'w'))
+
+$ python test.py
+Traceback (most recent call last):
+  File "test.py", line 3, in <module>
+OSError: [Errno 24] Too many open files: 'foo.txt'
+
+So how does one "leak" a file descriptor. Simply: 
+   by not closing opened files.
+
+Solution:
+files = []
+for x in range(10000):
+    f = open('foo.txt', 'w')
+    f.close()
+    files.append(f)
+
+with something_that_returns_a_context_manager() as my_resource:
+    do_something(my_resource)
+    ...
+    print('done using my_resource')
+
+Example:
+with open('ctm.txt', 'r') as infile:
+    for line in infile:
+        print('> {}'.format(line))
+
+print("done")
+
+ The variable only exists within the indented block below the with statement.
+
+ wherever the context manager is defined." 
+ There are a number of ways to create a context manager. 
+ The simplest is to define a class that contains two 
+ pecial methods:
+  __enter__() and __exit__().
+  
+ __enter__() returns the resource to be managed 
+        (like a file object in the case of open()).
+
+ __exit__() does any cleanup work and returns nothing.
+
+
+Example:
+class Open_File():
+    
+    def __init__(self, destination):
+        pass
+    
+    def __enter__(self):
+        pass
+
+    def __exit__(self, exc_type, exc_val, traceback):
+        pass
+
+Example code: try it:
+----------------------
+class File():
+    #sets up the object
+    def __init__(self, filename, mode):
+        self.filename = filename
+        self.mode = mode
+
+    #opens and returns the file
+    def __enter__(self):
+        self.open_file = open(self.filename, self.mode)
+        return self.open_file
+
+    #just closes the file
+    def __exit__(self, *args):
+        self.open_file.close()
+
+files = []
+for _ in range(10000):
+    with File('foo.txt', 'w') as infile:
+        infile.write('foo')
+        files.append(infile)
+
+Other uses of ContextManger:
+- example:    Lock in threading
+
+Example: bad program: 
+----------
+from threading import Lock
+lock = Lock()
+
+def do_something_dangerous():
+    lock.acquire()
+    raise Exception('oops I forgot this code could raise exceptions')
+    lock.release()       # This is never called  BAD
+
+try:
+    do_something_dangerous()
+except:
+    print('Got an exception')
+lock.acquire()
+print('Got here')
+
+Clearly lock.release() will never be called, 
+causing all other threads calling do_something_dangerous() to 
+become deadlocked. In our program, 
+this is represented by never hitting the print('Got here') line.
+    
+# To fix above issue:
+from threading import Lock
+lock = Lock()
+
+def do_something_dangerous():
+    with lock:
+        raise Exception('oops I forgot this code could raise exceptions')
+
+try:
+    do_something_dangerous()
+except:
+    print('Got an exception')
+lock.acquire()
+print('Got here')
+
+
+ContextLib Usage:
+-------------------
+Context managers are so useful, they have a whole 
+Standard Library module
+
+Contextlib contains tools for creating and working with 
+context managers. 
+
+One nice shortcut to creating a context manager from a class 
+is to use the @contextmanager decorator. 
+
+To use it, decorate a generator function that calls yield exactly 
+once. 
+
+Everything before the call to yield is considered the 
+code for __enter__().
+
+Everything after is the code for __exit__().
+
+Let's rewrite our File context manager using the decorator approach:
+
+from contextlib import contextmanager
+
+@contextmanager
+def open_file(path, mode):
+    the_file = open(path, mode)
+    yield the_file
+    the_file.close()
+
+files = []
+
+for x in range(100000):
+    with open_file('foo.txt', 'w') as infile:
+        files.append(infile)
+
+for f in files:
+    if not f.closed:
+        print('not closed')
+
+
+See the demo: cm_demo.py-
+------------------------------------------------------------------

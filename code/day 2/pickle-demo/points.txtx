@@ -1,0 +1,59 @@
+ Pickling is used to imrove performance of data oriented modules.
+
+ Pickling is the serializing and de-serializing of python objects to a byte stream.
+  Unpicking is the opposite.
+
+The process to converts any kind of python objects (list, dict, etc.) into byte streams (0s and 1s) 
+is called pickling or serialization or flattening or marshalling. 
+
+  pickling to be most useful with data analysis to perform routine tasks on the data, 
+  such as pre-processing.
+
+Realtime:
+
+pickling and unpickling allows  to easily transfer data 
+from one server/system to another and then store it in a file or database. 
+
+Train the algorithm once, store it to a variable (an object), and then we pickle it.
+ In the case of the NLTK module, generating the   classifiers every time was taking 5-15+ minutes.
+  With pickle, it was taking about 5 seconds.
+
+$ pip install pickle
+
+import pickle
+mylist = ['murthy', 'Raj', 'Kiran', 'Mallika']
+with open('datafile.txt', 'wb') as fh:
+   pickle.dump(mylist, fh)
+
+pickle_off = open ("datafile.txt", "rb")
+emp = pickle.load(pickle_off)
+print(emp)
+
+EmpID = {1:"Murthy",2:"53050",3:"IT",4:"38",5:"Flipkart"}
+pickling_on = open("EmpID.pickle","wb")
+pickle.dump(EmpID, pickling_on)
+pickling_on.close()
+
+pickle_off = open("EmpID.pickle", 'rb')
+EmpID = pickle.load(pickle_off)
+print(EmpID)
+
+Below are some of the common exceptions raised while dealing with pickle module −
+
+Pickle.PicklingError: If the pickle object doesn’t support pickling, this exception is raised.
+
+Pickle.UnpicklingError: In case the file contains bad or corrupted data.
+
+EOFError: In case the end of file is detected, this exception is raised.
+
+Prons:
+
+Comes handy to save complicated data.
+
+Easy to use, lighter and doesn’t require several lines of code.
+
+The pickled file generated is not easily readable and thus provide some security.
+
+Cons:
+
+Languages other than python may not able to reconstruct pickled python objects.

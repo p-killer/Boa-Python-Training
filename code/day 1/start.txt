@@ -1,0 +1,107 @@
+The venv module provides support for creating lightweight “virtual environments” 
+with their own site directories, optionally isolated from system site directories. 
+
+Each virtual environment has its own Python binary 
+which matches the version of the binary that was used to create this environment
+and can have its own independent set of installed Python packages in its site directories.
+
+It allows us to publish the package/app easily to git/production with dependent modules
+and python runtime version.
+
+$ python --version
+$ pip --version
+
+Python version 3.9: 
+    Add --upgrade-deps option to upgrade pip + setuptools to the latest on PyPI
+
+How to create?
+-------------
+
+c:\>python -m venv c:\path\to\myenv
+
+c:\training\> python -m venv venv/
+c:\training\> cd venv\scripts
+c:\training\> activate.bat
+(venv) c:\training>pip freeze>requirements.txt
+(venv) c:\training>pip install requests
+
+observe requests package in below folder.
+
+c:\training\venv\Lib\site-packages
+
+------------------------------------------------------------------------------------------------------
+virtualenv is a tool to create isolated Python environments. 
+virtualenv creates a folder which contains all the necessary 
+executables to use the packages.
+
+Install virtualenv via pip:
+
+$ pip install virtualenv
+
+Test your installation:
+$ virtualenv --version
+
+Create a virtual environment for a project:
+$ cd project_folder
+$ virtualenv venv
+
+Python interpreter of your choice (like python2.7).
+
+$ virtualenv -p /usr/bin/python2.7 venv
+Assuming that you are in your project directory:
+C:\Users\SomeUser\project_folder> venv\Scripts\activate
+Install packages using the pip command:
+
+$ pip install requests
+we can deactivate:
+
+$ deactivate
+To delete a virtual environment, just delete its folder.
+ (In this case, it would be rm -rf venv.)
+
+------------------------------------------------------------------------------------------------------
+
+Installing Pipenv:
+
+Pipenv is a dependency manager for Python projects. 
+
+If you’re familiar with Node.js’ npm or Ruby’s bundler, it is similar in spirit to those tools. 
+While pip can install Python packages, Pipenv is recommended as it’s a higher-level tool 
+that simplifies dependency management for common use cases.
+
+Use pip to install Pipenv:
+
+$ pip install --user pipenv
+
+$ cd project_folder
+$ pipenv install requests
+
+Pipenv will install the Requests library and create a Pipfile in  project’s directory. 
+The Pipfile is used to track which dependencies of project to re-install them when we 
+share project with others.
+
+Usage:
+
+import requests
+response = requests.get('https://httpbin.org/ip')
+print('Your IP is {0}'.format(response.json()['origin']))
+
+Run the script using pipenv run:
+
+$ pipenv run python main.py
+
+Lower level: virtualenv:
+---------------------
+
+
+------------------------------------------------------------------------
+
+Debugging Python in VS code:
+
+Firstly nstall python extension for VS code  
+
+1. write the python code.
+2. put break points in the code with mouse click.
+3.click Debug icon in the left panel --> click run and debug option --> select first option 
+"python for active ......"
+4. debug with step in , stepover.....

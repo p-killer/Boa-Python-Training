@@ -1,0 +1,13 @@
+status: 301
+server: AkamaiGHost
+content-length: 0
+location: https://www.adp.com/
+date: Sun, 22 Jul 2018 01:09:52 GMT
+connection: keep-alive
+continent: AS
+server-timing: cdn-cache; desc=HIT;, edge; dur=0;
+access-control-allow-methods: GET,POST,OPTIONS
+access-control-allow-origin: *
+-x-permanent-redirect-url: https://www.adp.com/
+content-location: http://www.adp.com
+
